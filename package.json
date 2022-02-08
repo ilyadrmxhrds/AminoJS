@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "axios": "^0.25.0",
+    "reconnecting-websocket": "^4.4.0",
+    "websocket": "^1.0.34",
+    "websocket-reconnect": "^1.0.6",
+    "ws": "^8.5.0"
+  },
+  "name": "@ilyadrmx/aminojs",
+  "version": "1.0.2",
+  "description": "Library for access to the Amino API (AminoApps)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyadrmxhrds/AminoJS.git"
+  },
+  "keywords": [
+    "bot",
+    "amino",
+    "narvii",
+    "medialab",
+    "unofficial"
+  ],
+  "author": "IlyaDrmx",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ilyadrmxhrds/AminoJS/issues"
+  },
+  "homepage": "https://github.com/ilyadrmxhrds/AminoJS#readme"
+}
