@@ -9,6 +9,7 @@
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/bitbucket/issues/lyadrmxhrds/AminoJS)](https://github.com/ilyadrmxhrds/AminoJS/issues)
+[![Build](https://img.shields.io/bitbucket/issues/lyadrmxhrds/AminoJS)](https://github.com/ilyadrmxhrds/AminoJS/issues)
 [![License](https://img.shields.io/badge/license-GPL-blue)](/LICENSE)
 
 </div>
@@ -24,9 +25,7 @@
 
 - [About](#about)
 - [Usage](#usage)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -50,13 +49,13 @@ Then you should open your CMD or Terminal and open this folder.
 
 Open terminal and type
 
-```
+```bash
 cd PATH_TO_YOUR_FOLDER
 ```
 
 And then you need to install AminoJS package.
 
-```
+```bash
 npm install @ilyadrmx/aminojs
 ```
 
@@ -85,21 +84,35 @@ L--- node_modules
      ...
 ```
 
-## ⛏️ Built Using <a name = "built_using"></a>
+### Creating simple bot
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+Firstly, let's login our bot. Open "main.js" file (/AminoJSBot/bot).
+Now, let's import AminoJS library.
+
+```js
+const { Client, SubClient } = require("@ilyadrmx/aminojs");
+```
+
+So, we've imported library and now we need to make an instance of **Client** class.
+It allows us to use Amino's global user features.
+
+```js
+const client = new Client(null, false); // Don't change if you don't know what is this
+client.login("YOUR_EMAIL", "YOUR_PASSWORD"); // Here you should replace text
+```
+
+Lines that we've added above allows our bot to login.
+Now we should to make an instance of **SubClient** class.
+It allows us to use Amino's community user features.
+
+```js
+const client = new Client(null, false);
+client.login("YOUR_EMAIL", "YOUR_PASSWORD");
+    .then(() => { // .then() is necessary
+        const subClient = new SubClient(client, "COM_ID");
+    });
+```
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- [@ilyadrmxhrds](https://github.com/ilyadrmxhrds) - Idea & Initial work
