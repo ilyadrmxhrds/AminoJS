@@ -4,22 +4,19 @@
 </p>
 
 <h3 align="center">AminoJS</h3>
-
+<p align="center">
+  Library for access to the Amino API (AminoApps)
+  <br> 
+</p>
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/bitbucket/issues/lyadrmxhrds/AminoJS)](https://github.com/ilyadrmxhrds/AminoJS/issues)
-[![Build](https://img.shields.io/bitbucket/issues/lyadrmxhrds/AminoJS)](https://github.com/ilyadrmxhrds/AminoJS/issues)
 [![License](https://img.shields.io/badge/license-GPL-blue)](/LICENSE)
 
 </div>
 
 ---
-
-<p align="center">
-  Library for access to the Amino API (AminoApps)
-  <br> 
-</p>
 
 ## 📝 Table of Contents
 
@@ -107,12 +104,138 @@ It allows us to use Amino's community user features.
 
 ```js
 const client = new Client(null, false);
-client.login("YOUR_EMAIL", "YOUR_PASSWORD");
+client.login("YOUR_EMAIL", "YOUR_PASSWORD")
     .then(() => { // .then() is necessary
         const subClient = new SubClient(client, "COM_ID");
     });
 ```
 
+Com ID is an ID that allows you to enter in community. You can easily get a list of communities by this code:
+
+```js
+const client = new Client(null, true);
+client.login("YOUR_EMAIL", "YOUR_PASSWORD")
+    .then(() => {
+        client.getSubClients()
+            .then((communities) => { // .then() is necessary
+                for (let community in communities) {
+                    let com = communities[community];
+                    console.log(`${com.name}: ${com.ndcId}`);
+                }
+            });
+    });
+```
+
+Copy the id of the current community and paste it in "COM_ID" field.
+Now, let's create a message listener. You should make a WebSocket listener for amino by using
+
+```js
+client.startListeningMessages();
+```
+
+But if you don't know how to do it, just get code [here](https://raw.githubusercontent.com/ilyadrmxhrds/ImageStorage/main/config.js).
+Paste this code in "config.js" (/AminoJSBot/bot).
+Now your "config.js" code structure is
+
+```js
+function customSocketListening(client, subClient) {
+    client.startListeningMessages();
+    client.ws.then((webSocket) => {
+        /**
+         * It's when everyting works
+         */
+         webSocket.on(
+            "open", () => {
+                // ...
+            }
+        );
+
+        /**
+         * It's when client got Amino message
+         */
+        webSocket.on(
+            "message", (message) => {
+                // ... 
+            }
+        );
+
+        /**
+         * It's when something does not work and it needs to restart
+         */
+        webSocket.on(
+            // ... 
+        );
+    });
+}
+```
+
+We are going to create a bot, that replies user the message after command.
+How it will work:
+
+**User:**<br>
+/say Hello!
+
+**Bot:**<br>
+Reply to: **User**<br>
+Hello!
+
+So, we need to take user's text after "/say" word. In JavaScript, we use 
+
+```js
+String.substring()
+```
+
+Now, let's implement this to our code
+
+```js
+// ...
+
+webSocket.on(
+    "message", (message) => {
+        let data = client.toJson(message).o; // This is necessary
+        data = data.chatMessage;
+        /**
+         * Empty text check
+         */
+        if (typeof data.content !== "undefined" && data.author.uid !== client.profile.uid) {
+            /**
+             * Command "/say" check
+             */
+            if (data.content.toLowerCase().startsWith("/say ")) {
+                try {
+                    subClient.replyTo(
+                        data.threadId,
+                        data.messageId,
+                        data.content.substring(5)
+                    );
+                } catch (e) {
+                    console.log("Noncritical error. " + e.toString());
+                }
+            }
+        }
+    }
+);
+
+// ...
+```
+
+We created the main logic for our command. Let's add it to **Client**.
+
+```js
+const { Client, SubClient } = require("../index");
+const customSocketListening = require("./config").customSocketListening; // Import our function above from config file
+
+const client = new Client(null, true);
+client.login("YOUR_EMAIL", "YOUR_PASSWORD")
+    .then(() => {
+        const subClient = new SubClient(client, "COM_ID");
+        customSocketListening(client, subClient);
+    });
+```
+
+And that's all!
+
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@ilyadrmxhrds](https://github.com/ilyadrmxhrds) - Idea & Initial work
+- [@whoeevee](https://github.com/whoeevee) - Help with some functions
