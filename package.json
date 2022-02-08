@@ -7,7 +7,7 @@
     "ws": "^8.5.0"
   },
   "name": "@ilyadrmx/aminojs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Library for access to the Amino API (AminoApps)",
   "main": "index.js",
   "directories": {
