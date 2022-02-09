@@ -63,8 +63,8 @@ NPM manager will download all files that you need.
 I recommend that you create a folder named "bot" inside of our "AminoJSBot" folder.
 Then, inside of "bot" folder you should create two files:
 
-- main.js
-- config.js
+- main.mjs
+- config.mjs
 
 So, we have a project structure like this:
 
@@ -74,8 +74,8 @@ AminoJSBot
 ¦    package.json
 ¦
 +--- bot
-¦       config.js
-¦       main.js
+¦       config.mjs
+¦       main.mjs
 ¦       
 L--- node_modules
      ...
@@ -83,11 +83,11 @@ L--- node_modules
 
 ### Creating simple bot
 
-Firstly, let's login our bot. Open "main.js" file (/AminoJSBot/bot).
+Firstly, let's login our bot. Open "main.mjs" file (/AminoJSBot/bot).
 Now, let's import AminoJS library.
 
 ```js
-const { Client, SubClient } = require("@ilyadrmx/aminojs");
+import { Client, SubClient } from "@ilyadrmx/aminojs";
 ```
 
 So, we've imported library and now we need to make an instance of **Client** class.
@@ -133,12 +133,12 @@ Now, let's create a message listener. You should make a WebSocket listener for a
 client.startListeningMessages();
 ```
 
-But if you don't know how to do it, just get code [here](https://raw.githubusercontent.com/ilyadrmxhrds/ImageStorage/main/config.js).
-Paste this code in "config.js" (/AminoJSBot/bot).
-Now your "config.js" code structure is
+But if you don't know how to do it, just get code [here](https://raw.githubusercontent.com/ilyadrmxhrds/ImageStorage/main/config.mjs).
+Paste this code in "config.mjs" (/AminoJSBot/bot).
+Now your "config.mjs" code structure is
 
 ```js
-function customSocketListening(client, subClient) {
+export function customSocketListening(client, subClient) {
     client.startListeningMessages();
     client.ws.then((webSocket) => {
         /**
@@ -192,7 +192,7 @@ Now, let's implement this to our code
 
 webSocket.on(
     "message", (message) => {
-        let data = client.toJson(message).o; // This is necessary
+        var data = toJson(message).o; // This is necessary
         data = data.chatMessage;
         /**
          * Empty text check
@@ -222,8 +222,8 @@ webSocket.on(
 We created the main logic for our command. Let's add it to **Client**.
 
 ```js
-const { Client, SubClient } = require("../index");
-const customSocketListening = require("./config").customSocketListening; // Import our function above from config file
+import { Client, SubClient } from "../index";
+import  { customSocketListening } from "./config"; // Import our function above from config file
 
 const client = new Client(null, true);
 client.login("YOUR_EMAIL", "YOUR_PASSWORD")
