@@ -3,9 +3,10 @@ import { SubClient } from "./lib/subclient.js";
 import { Headers } from "./lib/util/headers.js";
 import { Helpers } from "./lib/util/helpers.js";
 import { WebSocketClient } from "./lib/util/wsclient.js";
+import { Objects } from "./lib/util/objects.js"
 
 export {
-    Client, SubClient, Headers, Helpers, WebSocketClient
+    Client, SubClient, Headers, Helpers, WebSocketClient, Objects
 }
 
 /**
