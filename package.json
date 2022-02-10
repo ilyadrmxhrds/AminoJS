@@ -7,12 +7,13 @@
     "ws": "^8.5.0"
   },
   "name": "@ilyadrmx/aminojs",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Library for access to the Amino API (AminoApps)",
-  "main": "index.mjs",
+  "main": "index.js",
   "directories": {
     "lib": "lib"
   },
+  "type": "module",
   "devDependencies": {
     "eslint": "^8.8.0",
     "eslint-config-google": "^0.14.0"
